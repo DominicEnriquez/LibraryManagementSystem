@@ -92,20 +92,32 @@ class BookController extends Controller
         $loan_book = $borrowBook->getUser($this->user_id)->lists('book_id')->toArray();        
         
         // Catch selected book if member already loan
-        $is_exists = [];
+        $is_exists = [];      
+        
+        // Catch selected book if not available
+        $is_zero_qty = [];
+        
+        // Catch Success Borrow
+        $is_success = [];
         
         // Check if selected loan is less than to given loan
         if (count($request->book) <= $loan) {
         
             foreach ($request->book as $id) {
+                
                 $book = Book::find($id);            
                 
                 // Check book quantity balance
-                if ($book->quantities > 0) {
+                if ($book->quantities < 1) {
+                    $is_zero_qty[$id] = $book->title;
+                    
+                } else {
                     
                     if (in_array($id, $loan_book)) {
                         $is_exists[$id] = $book->title;
+                        
                     } else {
+                        
                          // Insert Borrowed Book
                         $borrow = new BorrowBook;
                         $borrow->book_id = $id;
@@ -118,15 +130,11 @@ class BookController extends Controller
                         
                         // Update Selected Book Quantity
                         $book->quantities = ($book->quantities - 1);
-                        $book->save();                      
+                        $book->save();
+
+                        $is_success[$id] = $book->title;
                     }
                 }
-            }
-            
-            $warning = 'The Book "'.implode(', ', $is_exists).'" is already borrowed.';            
-            if (count($is_exists) == count($request->book)) {
-                return redirect()->route('home')
-                             ->with('warning', $warning); 
             }
             
         } else {
@@ -135,14 +143,28 @@ class BookController extends Controller
             
         }
         
-        $redirect = redirect()->route('borrow-books')
-                         ->with('success', trans('message.successBorrow'));
+        $goBack = redirect()->route('home');
         
-        if (count($is_exists) > 0) {
-            $redirect->with('warning', $warning);
+        // Set Notification for existing borrowed
+        $warning = 'The Book is already borrowed:<br>'.implode('<br>', $is_exists);                             
+        
+        // Set Notification for zero quantity
+        $warning2 = 'The Book is not available:<br>'.implode('<br>', $is_zero_qty);
+        
+        if (count($is_exists) OR 
+            count($is_exists) == count($request->book)) {
+            return $goBack->with('warning', $warning);                              
         }
         
-        return $redirect;
+        if (count($is_zero_qty) OR 
+            count($is_zero_qty) == count($request->book)) {
+            return $goBack->with('warning', $warning2);                              
+        }
+        
+        if (count($is_success)) {
+            return redirect()->route('borrow-books')
+                             ->with('success', trans('message.successBorrow').':<br>'.implode('<br>', $is_success));  
+        }
     }
     
     /**
@@ -183,6 +205,9 @@ class BookController extends Controller
      */
     public function doReturnBooks(BorrowBookRequest $request, BookRestriction $bookRules)
     {
+        // Catch Success Borrow
+        $is_success = [];        
+        
         foreach ($request->book as $id) {
                         
             $returnBook = ReturnBook::whereBorrowBookId($id)->first();           
@@ -209,10 +234,17 @@ class BookController extends Controller
             $borrowBook = BorrowBook::find($id);
             $borrowBook->is_return = 'yes';
             $borrowBook->save();
+            
+            // Update book quantities add 1
+            $book = Book::find($borrowBook->book_id);
+            $book->quantities = ($book->quantities + 1);
+            $book->save();
+            
+            $is_success[$id] = $book->title;
         }
         
         return redirect()->route('return-books')
-                         ->with('success', trans('message.successReturn'));
+                         ->with('success', trans('message.successReturn').':<br>'.implode('<br>', $is_success));
     }
     
     /**

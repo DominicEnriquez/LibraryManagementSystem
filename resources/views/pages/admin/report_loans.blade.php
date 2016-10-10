@@ -17,10 +17,10 @@
         <table id="dtlist" class="table table-striped table-bordered bulk_action">
           <thead>
             <tr>
+              <th>Loan Date</th>
               <th>Book ID</th>
               <th>Title</th>
-              <th>Author</th>
-              <th>Date Borrowed</th>
+              <th>Author</th>              
             </tr>
           </thead>
         </table>
@@ -34,17 +34,17 @@
 <script>
 $(function() {
     var oTable = $('table#dtlist').dataTable({
-        order: [[3, 'asc']],
+        order: [[0, 'asc']],
         processing: true,
-        serverSide: true,
+        serverSide: true,        
         ajax: {
             url: "{{route('admin::dt-report-loans')}}"
         },
         columns: [
-            {data: 'books.id', name: 'books.id'},
-            {data: 'books.title', name: 'books.title'},
-            {data: 'books.author', name: 'books.author'},
             {data: 'created_at', name: 'created_at'},
+            {data: 'books.id', name: 'books.id', searchable: false, orderable: false},
+            {data: 'books.title', name: 'books.title', searchable: false, orderable: false},
+            {data: 'books.author', name: 'books.author', searchable: false, orderable: false},            
         ]
     });
 });

@@ -17,11 +17,11 @@
         <table id="dtlist" class="table table-striped table-bordered bulk_action">
           <thead>
             <tr>
+              <th>Returned Date</th>  
               <th>Title</th>
               <th>Author</th>
               <th>Charge</th>
               <th>Late</th>              
-              <th>Returned Date</th>
               <th>Borrowed Date</th>
             </tr>
           </thead>
@@ -44,11 +44,11 @@ $(function() {
             url: "{{route('dt-return-books')}}"
         },
         columns: [
+            {data: 'return_at', name: 'return_at'},
             {data: 'borrow_book.books.title', name: 'borrow_book.books.title'},
             {data: 'borrow_book.books.author', name: 'borrow_book.books.author'},
             {data: 'charge', name: 'charge'},
-            {data: 'total_late', name: 'total_late'},
-            {data: 'return_at', name: 'return_at'},
+            {data: 'total_late', name: 'total_late'},            
             {data: 'created_at', name: 'created_at'}
         ]
     });

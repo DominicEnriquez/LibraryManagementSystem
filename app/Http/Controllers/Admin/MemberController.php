@@ -37,7 +37,7 @@ class MemberController extends Controller
                                         return Carbon::parse($user->profile->birthdate)->age;
                                     })->addColumn('action', function($user) {
                                         return "<a href='".route("admin::member-edit", $user->id)."'><i class='fa fa-edit'></i></a>&nbsp;&nbsp;
-                                                <a href='".route("admin::do-member-delete", $user->id)."'><i class='fa fa-trash-o'></i></a>";
+                                                <a href='#' onclick='confirmDelete(\"".route("admin::do-member-delete", $user->id)."\")'><i class='fa fa-trash-o'></i></a>";
                                     })->make(true);
     }
     
@@ -90,15 +90,15 @@ class MemberController extends Controller
     /**
      *  Submit Edit Member
      *  
+     *  @param \App\Http\Requests\RegisterRequest $request
+     *  @param \App\UserProfile $profile
      *  @param int $id
      *  
      *  @return \Illuminate\Http\RedirectResponse
      */    
     public function doEdit(RegisterRequest $request, UserProfile $profile, $id)
     {
-        $user = User::find($id);
-        
-        if ($profile->saveProfile($user->profile(), $profile, $request)) {
+        if ($profile->saveProfile(false, User::find($id)->profile, $request)) {
             return redirect()->route('admin::member-list')
                          ->with('success', trans('message.successMemberEdit')); 
         }            
@@ -110,11 +110,30 @@ class MemberController extends Controller
     /**
      *  Submit Delete Member
      *  
+     *  @param int $id
+     *  
      *  @return \Illuminate\Http\RedirectResponse
      */        
-    public function doDelete()
+    public function doDelete($id, User $user)
     {
+        $user->findOrFail($id)->delete();
+        
         return redirect()->route('admin::member-list')
                          ->with('success', trans('message.successMemberDelete'));        
+    }
+
+    /**
+     *  Restore Member
+     *  
+     *  @param int $id
+     *  
+     *  @return \Illuminate\Http\RedirectResponse
+     */        
+    public function doRestore($id, User $user)
+    {
+        $user->withTrashed()->whereId($id)->restore();
+        
+        return redirect()->route('admin::member-list')
+                         ->with('success', trans('message.successMemberRestore'));        
     }
 }

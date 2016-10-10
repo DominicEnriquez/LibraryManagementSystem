@@ -17,10 +17,10 @@
         <table id="dtlist" class="table table-striped table-bordered bulk_action">
           <thead>
             <tr>
+              <th>QTY</th>
               <th>Book ID</th>
               <th>Title</th>
-              <th>Author</th>
-              <th>QTY</th>
+              <th>Author</th>              
               <th>Updated At</th>
             </tr>
           </thead>
@@ -42,10 +42,10 @@ $(function() {
             url: "{{route('admin::dt-report-quantities')}}"
         },
         columns: [
+            {data: 'quantities', name: 'quantities'},
             {data: 'id', name: 'id'},
             {data: 'title', name: 'title'},
-            {data: 'author', name: 'author'},
-            {data: 'quantities', name: 'quantities'},
+            {data: 'author', name: 'author'},            
             {data: 'updated_at', name: 'updated_at'},
         ]
     });

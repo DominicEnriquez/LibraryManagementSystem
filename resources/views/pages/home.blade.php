@@ -43,10 +43,10 @@
               <thead>
                 <tr>
                   <th></th>
+                  <th>QTY</th>
                   <th>Title</th>
                   <th>Author</th>
-                  <th>ISBN</th>
-                  <th>Quantity</th>
+                  <th>ISBN</th>                  
                   <th>Shelf Location</th>
                 </tr>
               </thead>
@@ -83,10 +83,10 @@ $(function() {
         },
         columns: [
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
+            {data: 'quantities', name: 'quantities'},
             {data: 'title', name: 'title'},
             {data: 'author', name: 'author'},
-            {data: 'isbn', name: 'isbn'},
-            {data: 'quantities', name: 'quantities'},
+            {data: 'isbn', name: 'isbn'},            
             {data: 'shelf_location', name: 'shelf_location'}
         ]
     });

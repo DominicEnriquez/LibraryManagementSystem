@@ -72,6 +72,10 @@ Route::group(['middleware' => 'auth'], function() {
             Route::get('delete/{id}', [
                 'as' => 'admin::do-member-delete', 'uses' => 'MemberController@doDelete'
             ]);
+            
+            Route::get('restore/{id}', [
+                'as' => 'admin::do-member-retore', 'uses' => 'MemberController@doRestore'
+            ]);
         });
         
         Route::group(['prefix' => 'book'], function() {
@@ -99,6 +103,10 @@ Route::group(['middleware' => 'auth'], function() {
             
             Route::get('delete/{id}', [
                 'as' => 'admin::do-book-delete', 'uses' => 'BookController@doDelete'
+            ]);
+            
+            Route::get('restore/{id}', [
+                'as' => 'admin::do-book-restore', 'uses' => 'BookController@doRestore'
             ]);
         });
         

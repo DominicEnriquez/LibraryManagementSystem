@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Book;
 use Datatables;
 use Carbon\Carbon;
+use App\Http\Requests\BookCreateRequest;
 
 class BookController extends Controller
 {
@@ -29,9 +30,9 @@ class BookController extends Controller
      */
     public function getBookList()
     {
-        return Datatables::of(Book::all())->addColumn('action', function($user) {
-                                        return "<a href='".route("admin::book-edit", $user->id)."'><i class='fa fa-edit'></i></a>&nbsp;&nbsp;
-                                                <a href='".route("admin::do-book-delete", $user->id)."'><i class='fa fa-trash-o'></i></a>";
+        return Datatables::of(Book::all())->addColumn('action', function($book) {
+                                        return "<a href='".route("admin::book-edit", $book->id)."'><i class='fa fa-edit'></i></a>&nbsp;&nbsp;
+                                                <a href='#' onclick='confirmDelete(\"".route("admin::do-book-delete", $book->id)."\")'><i class='fa fa-trash-o'></i></a>";
                                     })->make(true);
     }
     
@@ -48,43 +49,79 @@ class BookController extends Controller
     /**
      *  Submit New Book
      *  
+     *  @param \App\Http\Requests\BookCreateRequest $request
+     *  @param \App\Book $book
+     *  
      *  @return \Illuminate\Http\RedirectResponse
      */
-    public function doAdd()
-    {
-        return redirect()->route('admin::book-list')
-                         ->with('success', trans('message.successBookAdd'));
+    public function doAdd(BookCreateRequest $request, Book $book)
+    {          
+        if ( $book->saveBook($book, $request)) {
+            return redirect()->route('admin::book-list')
+                             ->with('success', trans('message.successBookAdd'));
+        }            
+        
+        return redirect()->route('admin::book-add')
+                         ->with('warning', trans('message.failedBookAdd'));    
     }
     
     /**
      *  Edit Book
      *  
+     *  $param int $id
+     *  
      *  @return \Illuminate\Http\Response
      */
-    public function showEdit()
+    public function showEdit($id)
     {
-        return view('pages.admin.book_edit')->with('title', 'Edit Book');
+        return view('pages.admin.book_edit', ['book'=>Book::find($id)])->with('title', 'Edit Book');
     }
     
     /**
      *  Submit Edit Book
      *  
+     *  @param int $id
+     *  
      *  @return \Illuminate\Http\RedirectResponse
      */    
-    public function doEdit()
+    public function doEdit(BookCreateRequest $request, Book $book, $id)
     {
+        if ( $book->saveBook($book->find($id), $request)) {
+            return redirect()->route('admin::book-list')
+                             ->with('success', trans('message.successBookAdd'));
+        }     
+        
         return redirect()->route('admin::book-list')
-                         ->with('success', trans('message.successBookEdit'));        
+                         ->with('warning', trans('message.failedBookEdit'));        
     }
 
     /**
      *  Submit Delete Book
      *  
+     *  @param int $id
+     *  
      *  @return \Illuminate\Http\RedirectResponse
      */        
-    public function doDelete()
+    public function doDelete($id)
     {
+        Book::find($id)->delete();
+        
         return redirect()->route('admin::book-list')
                          ->with('success', trans('message.successBookDelete'));        
+    }
+
+    /**
+     *  Restore Deleted Book
+     *  
+     *  @param int $id
+     *  
+     *  @return \Illuminate\Http\RedirectResponse
+     */        
+    public function doRestore($id)
+    {
+        Book::withTrashed()->whereId($id)->restore();
+        
+        return redirect()->route('admin::book-list')
+                         ->with('success', trans('message.successBookRestore'));        
     }
 }

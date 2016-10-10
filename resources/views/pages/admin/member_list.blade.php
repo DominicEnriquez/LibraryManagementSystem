@@ -17,6 +17,7 @@
         <table id="dtlist" class="table table-striped table-bordered bulk_action">
           <thead>
             <tr>
+              <th>Action</th>
               <th>ID</th>
               <th>Email</th>
               <th>First Name</th>
@@ -24,7 +25,6 @@
               <th>Address</th>
               <th>Age</th>
               <th>Date Created</th>
-              <th>Action</th>
             </tr>
           </thead>
         </table>
@@ -53,6 +53,7 @@ $(function() {
             url: "{{route('admin::dt-member-list')}}"
         },
         columns: [
+            {data: 'action', name: 'action', searchable: false, orderable: false},
             {data: 'id', name: 'id'},
             {data: 'email', name: 'email'},
             {data: 'profile.firstname', name: 'profile.firstname', orderable: false},
@@ -60,7 +61,6 @@ $(function() {
             {data: 'profile.address', name: 'profile.address', orderable: false},
             {data: 'age', name: 'age', orderable: false},
             {data: 'created_at', name: 'created_at'},
-            {data: 'action', name: 'action', searchable: false, orderable: false},
         ]
     });
 });

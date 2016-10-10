@@ -17,15 +17,14 @@
         <table id="dtlist" class="table table-striped table-bordered bulk_action">
           <thead>
             <tr>
+              <th>Action</th>
               <th>ID</th>
               <th>Title</th>
               <th>Author</th>
               <th>ISBN</th>              
               <th>QTY</th>
               <th>Shelf Location</th>
-              <th>Date Created</th>
-              <th>Date Updated</th>
-              <th>Action</th>
+              <th>Date Updated</th>              
             </tr>
           </thead>
         </table>
@@ -54,15 +53,14 @@ $(function() {
             url: "{{route('admin::dt-book-list')}}"
         },
         columns: [
+            {data: 'action', name: 'action', searchable: false, orderable: false},
             {data: 'id', name: 'id'},
             {data: 'title', name: 'title'},
             {data: 'author', name: 'author'},
             {data: 'isbn', name: 'isbn'},
             {data: 'quantities', name: 'quantities'},
             {data: 'shelf_location', name: 'shelf_location'},
-            {data: 'created_at', name: 'created_at'},
-            {data: 'updated_at', name: 'updated_at'},
-            {data: 'action', name: 'action'},
+            {data: 'updated_at', name: 'updated_at'},            
         ]
     });
 });

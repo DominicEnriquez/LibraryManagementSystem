@@ -16,7 +16,13 @@
         {!!Form::model($profile, ['route'=>['admin::do-member-edit', $profile->user_id], 'class'=>'form-horizontal form-label-left'])!!}
             @include('partials.form_notifications')
             @include('partials.page_notifications')
-            @include('partials.member_form');
+            @include('partials.member_form')
+            <div class="form-group">
+                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                  <button type="submit" class="btn btn-success">Save Changes</button>
+                  <a href="{{route('admin::member-list')}}" class="btn btn-default">Cancel</a>
+                </div>
+            </div>            
         {!!Form::close()!!}
       </div>
     </div>

@@ -21,7 +21,10 @@ class UserProfile extends Model
             if ($request->has($key)) {
                 $profile->{$key} = $request->{$key};
             }                
-        }  
-        return $user->save($profile);
+        }
+        if ($user) {
+           return $user->save($profile); 
+        }
+        return $profile->save();    
     }
 }

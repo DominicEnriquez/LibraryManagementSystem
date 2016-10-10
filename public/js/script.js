@@ -2,6 +2,13 @@ window.addEventListener('beforeunload', function() {
    $('button[type=submit]').attr('disabled', 'disabled'); 
 });
 
+function confirmDelete(link) {
+    if (confirm("Are you sure you want to delete")) {
+        window.location = link;
+    }
+    return false;
+}    
+
 $(function() {
     
     $('button[type=submit]').removeAttr('disabled');
@@ -9,6 +16,7 @@ $(function() {
     
     // Apply Parsley Validation
     var form = $('form').parsley()
+    
         email = $('input[name=email]')
         password = $('input[name=password]')
         password_confirm = $('input[name=password_confirmation]')
@@ -19,7 +27,13 @@ $(function() {
         middlename = $('input[name=middlename]')
         address = $('input[name=address]')
         gender = $('select[name=gender]')
-        birthdate = $('input[name=birthdate]');
+        birthdate = $('input[name=birthdate]')
+        
+        title = $('input[name=title]')
+        author = $('input[name=author]')
+        isbn = $('input[name=isbn]')
+        quantities = $('input[name=quantities]')
+        shelf_location = $('input[name=shelf_location]');
     
     email.attr('required', 'required')
          .attr('maxlength', '200');
@@ -56,14 +70,35 @@ $(function() {
     
     birthdate.attr('required', 'required');
     
+    
+    title.attr('required', 'required')
+         .attr('maxlength', '100')
+         .attr('minlength', '3');
+    
+    author.attr('required', 'required')
+          .attr('maxlength', '60')
+          .attr('minlength', '3');
+    
+    isbn.attr('required', 'required')
+            .attr('maxlength', '20')
+            .attr('minlength', '3');
+    
+    quantities.attr('required', 'required')
+            .attr('data-parsley-type', 'number')
+            .attr('maxlength', '11')
+            .attr('min', '1');
+    
+    shelf_location.attr('required', 'required')
+            .attr('maxlength', '100')
+            .attr('minlength', '3');
+    
     /**
      * Escape Error Message for Login Form
      */
     $('#login input[name=email]').attr('data-parsley-required-message', '')
                                  .attr('data-parsley-type-message', '');
     $('#login input[name=password]').attr('data-parsley-required-message', '');
-    
-    
+        
     var handleDataTableButtons = function() {
       if ($("#datatable-buttons").length) {
         $("#datatable-buttons").DataTable({
