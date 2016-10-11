@@ -1,27 +1,33 @@
-## Laravel PHP Framework
+## Library Management System
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+This simple application written using [Laravel 5.1 LTS](https://laravel.com/docs/5.1) Framework
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+## System Specifications
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+User portal  - for members of the Library
+Admin portal - for Librarians
 
-## Official Documentation
+### Public Access
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+- User Login
+- Member Registration
+- Member Forgot Password
 
-## Contributing
+### User Portal
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+- search for a book by Title and/or Author
+- borrow a book
+- return a book
 
-## Security Vulnerabilities
+### Admin Portal
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+- manage Books (add, edit, delete)   [title, author, isbn, quantities, shelf location]
+- manage Members (add, edit, delete)
+- view Report - book loans, balance quantities
 
-### License
+### Restrictions
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+- each book is loaned for a maximum duration of 2 calendar weeks
+- failure to return a book before expiry will cause a Fine to be charged to the Member @ $2 per day or part thereof
+- each Member can loan a maximum of 6 books
+- each Junior Member (age <= 12 years) can loan a maximum of 3 books
