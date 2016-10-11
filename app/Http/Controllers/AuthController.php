@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ForgotPasswordRequest;
 use App\User;
 use App\UserProfile;
 use Auth;
@@ -82,10 +83,14 @@ class AuthController extends Controller
     /**
      *  Submit Forgot Password
      *  
+     *  @param \App\Http\Requests\ForgotPasswordRequest $request
+     *  
      *  @return \Illuminate\Http\RedirectResponse
      */    
-    public function doForgotPassword()
+    public function doForgotPassword(ForgotPasswordRequest $request)
     {
+        //
+        
         return redirect()->route('auth::forgot-password')
                          ->with('success', trans('message.successForgotPassword'));                
     }

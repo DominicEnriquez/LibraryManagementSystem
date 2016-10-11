@@ -34,11 +34,21 @@ class RegisterRequest extends Request
             'address' => 'required|min:3|max:200',
             'gender' => ['required', 'regex:/^((male)|(female))$/i'],
             'birthdate' => 'required|date_format:Y-m-d',
+            
+            'g-recaptcha-response' => 'required|captcha'
         ];
         
-        if (\Route::currentRouteName() == 'admin::do-member-edit') {
-            unset($rules['email']);
-            unset($rules['password']);
+        switch (\Route::currentRouteName()) {
+            case 'admin::do-member-edit':
+            case 'account::do-profile':
+                unset($rules['email']);
+                unset($rules['password']);   
+                unset($rules['g-recaptcha-response']);   
+                break;
+                                
+            case 'admin::do-member-add':
+                unset($rules['g-recaptcha-response']);   
+                break;
         }
         
         return $rules;

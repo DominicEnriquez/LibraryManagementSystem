@@ -70,7 +70,7 @@ class MemberController extends Controller
         }            
         
         return redirect()->route('admin::member-add')
-                         ->with('warning', trans('message.failedRegister'));        
+                         ->with('warning', trans('message.failedMemberAdd'));        
     }    
     
     /**

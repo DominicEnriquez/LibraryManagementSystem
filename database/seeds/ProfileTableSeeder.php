@@ -17,9 +17,10 @@ class ProfileTableSeeder extends Seeder
             'contact_number' => '+63927XXXXXXX',
             'firstname' => 'Dominic',
             'lastname' => 'Enriquez',
+            'middlename' => 'G.',
             'address' => 'Makati City, Philippines',
             'gender' => 'male',
-            'birthdate' => '2016-10-06'
+            'birthdate' => '1989-09-28'
         ]);
     }
 }

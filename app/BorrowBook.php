@@ -26,6 +26,11 @@ class BorrowBook extends Model
         return $this->belongsTo('App\Book', 'book_id');
     }
     
+    public function bookTrashed()
+    {
+        return $this->belongsTo('App\Book', 'book_id')->withTrashed();
+    }
+    
     public function getUser($id)    
     {
         return $this->whereUserId($id)->whereIsReturn('no');

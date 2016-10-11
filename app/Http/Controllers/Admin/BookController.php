@@ -88,7 +88,7 @@ class BookController extends Controller
     {
         if ( $book->saveBook($book->find($id), $request)) {
             return redirect()->route('admin::book-list')
-                             ->with('success', trans('message.successBookAdd'));
+                             ->with('success', trans('message.successBookEdit'));
         }     
         
         return redirect()->route('admin::book-list')

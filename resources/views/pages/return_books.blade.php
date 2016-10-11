@@ -45,8 +45,8 @@ $(function() {
         },
         columns: [
             {data: 'return_at', name: 'return_at'},
-            {data: 'borrow_book.books.title', name: 'borrow_book.books.title'},
-            {data: 'borrow_book.books.author', name: 'borrow_book.books.author'},
+            {data: 'borrow_book.book_trashed.title', name: 'borrow_book.book_trashed.title'},
+            {data: 'borrow_book.book_trashed.author', name: 'borrow_book.book_trashed.author'},
             {data: 'charge', name: 'charge'},
             {data: 'total_late', name: 'total_late'},            
             {data: 'created_at', name: 'created_at'}

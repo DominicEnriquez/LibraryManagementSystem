@@ -26,7 +26,8 @@
         {!!Form::radio('gender', 'male', null, ['class'=>'flat'])!!}
         Female:
         {!!Form::radio('gender', 'female', null, ['class'=>'flat'])!!}
-      </p>  
+      </p>
+      <div id="gender-error"></div>
     </div>
   </div>
   <div class="form-group">

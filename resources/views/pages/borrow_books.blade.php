@@ -59,8 +59,8 @@ $(function() {
         },
         columns: [
             {data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},
-            {data: 'books.title', name: 'books.title'},
-            {data: 'books.author', name: 'books.author'},
+            {data: 'book_trashed.title', name: 'book_trashed.title'},
+            {data: 'book_trashed.author', name: 'book_trashed.author'},
             {data: 'created_at', name: 'created_at'},
             {data: 'return_book.expired_at', name: 'return_book.expired_at'}
         ]

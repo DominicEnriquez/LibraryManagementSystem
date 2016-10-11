@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Controllers\Controller;
+use App\UserProfile;
 
 class AccountController extends Controller
 {
@@ -24,10 +25,15 @@ class AccountController extends Controller
      *  
      *  @return \Illuminate\Http\RedirectReponse
      */    
-    public function doProfile()
+    public function doProfile(RegisterRequest $request, UserProfile $profile)
     {
-        return redirect()->route('account::profile')
-                         ->with('success', trans('message.successProfile'));
+        if ($profile->saveProfile(false, auth()->user()->profile, $request)) {
+            return redirect()->route('account::profile')
+                         ->with('success', trans('message.successProfile')); 
+        }            
+        
+        return redirect()->route('account::profile', $id)
+                         ->with('warning', trans('message.failedProfile'));
     }
     
     /**

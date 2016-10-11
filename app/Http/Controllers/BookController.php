@@ -139,17 +139,17 @@ class BookController extends Controller
             
         } else {
             return redirect()->route('home')
-                             ->with('error', 'You reach the maximum borrow. '.($loan>0?'Please select up to '.$loan:'')); 
+                             ->with('error', trans('message.failedMaxBorrow') . ($loan>0?' Please select up to '.$loan:'')); 
             
         }
         
         $goBack = redirect()->route('home');
         
         // Set Notification for existing borrowed
-        $warning = 'The Book is already borrowed:<br>'.implode('<br>', $is_exists);                             
+        $warning = trans('message.failedExistBorrow') . '<br>'.implode('<br>', $is_exists);                             
         
         // Set Notification for zero quantity
-        $warning2 = 'The Book is not available:<br>'.implode('<br>', $is_zero_qty);
+        $warning2 = trans('message.failedNoQtyBorrow') . '<br>'.implode('<br>', $is_zero_qty);
         
         if (count($is_exists) OR 
             count($is_exists) == count($request->book)) {
@@ -184,9 +184,9 @@ class BookController extends Controller
      */
     public function getBorrowBooks()
     {
-        $book = BorrowBook::whereHas('books', function($query) { 
+        $book = BorrowBook::whereHas('bookTrashed', function($query) { 
                     $query->whereUserId($this->user_id); 
-                })->with('books')
+                })->with('bookTrashed')
                   ->with('returnBook')
                   ->whereIsReturn('no')
                   ->orderby('id', 'desc');
@@ -236,7 +236,7 @@ class BookController extends Controller
             $borrowBook->save();
             
             // Update book quantities add 1
-            $book = Book::find($borrowBook->book_id);
+            $book = Book::withTrashed()->find($borrowBook->book_id);
             $book->quantities = ($book->quantities + 1);
             $book->save();
             
@@ -266,7 +266,7 @@ class BookController extends Controller
     {
         $book = ReturnBook::whereHas('borrowBook', function($query) { 
                     $query->whereUserId($this->user_id); 
-                })->with('borrowBook.books')
+                })->with('borrowBook.bookTrashed')
                   ->where('return_at', '<>', '')->orderBy('id', 'desc');
                   
         return Datatables::of($book)->make(true);

@@ -5,7 +5,8 @@
 @section('content')
 
 <div class="row">
-  <div class="col-md-12 col-sm-12 col-xs-12">  
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    @include('partials.page_notifications') 
     <div class="x_panel">
       <div class="x_title">
         <h2>{{$title}}</small></h2>
@@ -30,8 +31,7 @@
 
 <div class="row"> 
   <div class="col-md-12 col-sm-12 col-xs-12">
-    @include('partials.form_notifications')
-    @include('partials.page_notifications')  
+    @include('partials.form_notifications') 
     <div class="x_panel">
       <div class="x_title">
         <h2>Book List</small></h2>

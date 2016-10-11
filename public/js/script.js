@@ -26,15 +26,20 @@ $(function() {
         lastname = $('input[name=lastname]')
         middlename = $('input[name=middlename]')
         address = $('input[name=address]')
-        gender = $('select[name=gender]')
+        gender = $('select[name=gender], input[name=gender]')
         birthdate = $('input[name=birthdate]')
         
         title = $('input[name=title]')
         author = $('input[name=author]')
         isbn = $('input[name=isbn]')
         quantities = $('input[name=quantities]')
-        shelf_location = $('input[name=shelf_location]');
+        shelf_location = $('input[name=shelf_location]')
+        
+        captcha = $('input[name=g-recaptcha-response]');
     
+    /**
+     * Manage Member Form
+     */
     email.attr('required', 'required')
          .attr('maxlength', '200');
     
@@ -66,11 +71,14 @@ $(function() {
            .attr('maxlength', '200')
            .attr('minlength', '3');
            
-    gender.attr('required', 'required');
+    gender.attr('required', 'required')
+          .attr('data-parsley-errors-container', '#gender-error');
     
     birthdate.attr('required', 'required');
     
-    
+    /**
+     * Manage Book Form
+     */
     title.attr('required', 'required')
          .attr('maxlength', '100')
          .attr('minlength', '3');
@@ -97,7 +105,9 @@ $(function() {
      */
     $('#login input[name=email]').attr('data-parsley-required-message', '')
                                  .attr('data-parsley-type-message', '');
-    $('#login input[name=password]').attr('data-parsley-required-message', '');
+                                 
+    $('#login input[name=password]').attr('data-parsley-required-message', '')
+                                    .removeAttr('minlength');
         
     var handleDataTableButtons = function() {
       if ($("#datatable-buttons").length) {

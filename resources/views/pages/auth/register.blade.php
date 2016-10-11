@@ -10,36 +10,46 @@
         @include('partials.form_notifications')
         @include('partials.page_notifications')
         <div>
-            {!! Form::text('firstname', null, ['class'=>'form-control first-focus', 'placeholder'=>'First Name']) !!}
+            <small class="pull-left">First Name</small>
+            {!! Form::text('firstname', null, ['class'=>'form-control first-focus', 'placeholder'=>'First Name']) !!}            
         </div>
         <div>
+            <small class="pull-left">Last Name</small>
             {!! Form::text('lastname', null, ['class'=>'form-control', 'placeholder'=>'Last Name']) !!}
         </div>
         <div>
+            <small class="pull-left">Middle Name</small>
             {!! Form::text('middlename', null, ['class'=>'form-control', 'placeholder'=>'Middle Name']) !!}
         </div>
         <div>
+            <small class="pull-left">Contact Number</small>
             {!! Form::text('contact_number', null, ['class'=>'form-control', 'placeholder'=>'Contact Number']) !!}
         </div>
         <div>
+            <small class="pull-left">Address</small>
             {!! Form::text('address', null, ['class'=>'form-control', 'placeholder'=>'Address']) !!}
         </div>
         <div>
-            {!! Form::text('birthdate', null, ['class'=>'form-control', 'placeholder'=>'Date Of Birth: YYYY-MM-DD']) !!}
+            <small class="pull-left">Date Of Birth</small>
+            {!! Form::date('birthdate', null, ['class'=>'form-control', 'placeholder'=>'Date Of Birth: YYYY-MM-DD']) !!}
         </div>
         <div>
+            <small class="pull-left">Gender</small>
             {!! Form::select('gender', ['male'=>'Male', 'female'=>'Female'], null, ['placeholder'=>'Gender', 'class'=>'form-control']) !!}
         </div>
         <br>
         <div class="divider-dashed"></div>
         <br>
         <div>
+            <small class="pull-left">Email Address</small>
             {!! Form::email('email', null, ['class'=>'form-control', 'placeholder'=>'Email']) !!}
         </div>
         <div>
+            <small class="pull-left">Password</small>
             {!! Form::password('password', ['class'=>'form-control', 'placeholder'=>'Password']) !!}
         </div>
         <div>
+            <small class="pull-left">Confirm Password</small>
             {!! Form::password('password_confirmation', ['class'=>'form-control', 'placeholder'=>'Confirm Password']) !!}
         </div>
         <div class="captcha">
