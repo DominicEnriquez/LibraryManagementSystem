@@ -4,8 +4,8 @@ This simple application written using [Laravel 5.1 LTS](https://laravel.com/docs
 
 ## System Specifications
 
-User portal  - for members of the Library
-Admin portal - for Librarians
+- User portal  - for members of the Library
+- Admin portal - for Librarians
 
 ### Public Access
 
